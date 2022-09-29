@@ -3,13 +3,15 @@ from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from ciphers.constants import *
 
 def ecb(infile: str, outfile: str):
-	print("ecb")
+	
+	print(f'Encrypting {infile} using ECB ...')
 	key = os.urandom(CHUNKSIZE)
 
 	cipher = Cipher(algorithms.AES(key), modes.ECB())
 	encryptor = cipher.encryptor()
 
 	_encrypt_file(infile, outfile, encryptor)
+	print(f'\nEcryption done - outputs/{outfile}')
 
 	return
 
