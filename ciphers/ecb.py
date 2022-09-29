@@ -5,8 +5,8 @@ from ciphers.constants import *
 def ecb(infile: str, outfile: str):
 	print("ecb")
 	key = os.urandom(CHUNKSIZE)
-	iv = os.urandom(CHUNKSIZE)
-	cipher = Cipher(algorithms.AES(key), modes.CBC(iv))
+
+	cipher = Cipher(algorithms.AES(key), modes.ECB())
 	encryptor = cipher.encryptor()
 
 	_encrypt_file(infile, outfile, encryptor)
@@ -24,6 +24,9 @@ def _encrypt_file(infile: str, outfile: str, encryptor: Cipher):
 		data = f.read(CHUNKSIZE)
 		if not data:
 			break
+
+		len_diff = CHUNKSIZE - len(data)
+		data += b'\0' * len_diff
 
 		enc_out += encryptor.update(data)
 
