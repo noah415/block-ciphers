@@ -19,7 +19,12 @@ def _encrypt_file(infile: str, outfile: str, key):
 	iv = os.urandom(CHUNKSIZE)
 
 	f = open(infile, 'rb')
-	header = f.read(BMPHEADER)
+
+	bmp = False
+	if '.bmp' == infile[-4:] and '.bmp' == outfile[-4:]:
+		bmp = True
+		header = f.read(BMPHEADER)
+
 	enc_out = b''
 
 	while True:
@@ -38,6 +43,8 @@ def _encrypt_file(infile: str, outfile: str, key):
 		enc_out += iv
 
 	with open(f'outputs/{outfile}', 'wb') as f2:
-		
-		f2.write(header)
+
+		if bmp:
+			f2.write(header)
+
 		f2.write(enc_out)

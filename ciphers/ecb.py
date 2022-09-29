@@ -3,7 +3,7 @@ from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from ciphers.constants import *
 
 def ecb(infile: str, outfile: str):
-	
+
 	print(f'Encrypting {infile} using ECB ...')
 	key = os.urandom(CHUNKSIZE)
 
@@ -18,7 +18,12 @@ def ecb(infile: str, outfile: str):
 def _encrypt_file(infile: str, outfile: str, encryptor: Cipher):
 
 	f = open(infile, 'rb')
-	header = f.read(BMPHEADER)
+
+	bmp = False
+	if '.bmp' == infile[-4:] and '.bmp' == outfile[-4:]:
+		bmp = True
+		header = f.read(BMPHEADER)
+
 	enc_out = b''
 
 	while True:
@@ -33,6 +38,9 @@ def _encrypt_file(infile: str, outfile: str, encryptor: Cipher):
 		enc_out += encryptor.update(data)
 
 	with open(f'outputs/{outfile}', 'wb') as f2:
-		f2.write(header)
+
+		if bmp:
+			f2.write(header)
+		
 		f2.write(enc_out)
 
