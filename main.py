@@ -1,7 +1,7 @@
 import sys
 import cryptography
-from cyphers.cbc import cbc
-from cyphers.ecb import ecb
+from ciphers.cbc import cbc
+from ciphers.ecb import ecb
 
 def main():
 	if len(sys.argv[1:]) != 3:

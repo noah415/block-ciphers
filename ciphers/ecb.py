@@ -1,6 +1,6 @@
 import os
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
-from constants import *
+from ciphers.constants import *
 
 def ecb(infile: str, outfile: str):
 	print("ecb")
