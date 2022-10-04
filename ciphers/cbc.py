@@ -1,6 +1,12 @@
 import os
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
+from cryptography.hazmat.primitives import padding
 from ciphers.constants import *
+from urllib.parse import quote, unquote
+import sys
+from Crypto.Util.Padding import pad, unpad
+from base64 import b64encode, b64decode
+from Crypto.Cipher import AES
 
 def cbc(infile: str, outfile: str):
 
@@ -47,19 +53,22 @@ def _encrypt_file(infile: str, outfile: str, encryptor: Cipher):
 
 		f2.write(enc_out)
 
-def _encrypt(message):
-	key = os.urandom(CHUNKSIZE)
-	iv = os.urandom(CHUNKSIZE)
-	cipher = Cipher(algorithms.AES(key), modes.CBC(iv))
-	encryptor = cipher.encryptor()
-
-	info = 'userid=456; userdata='
+def _encrypt(message, cipher):
+	info = 'userid=456;userdata='
 	session = ';session-id=31337'
 
-	data = info + message + session
+	# url encode the data
+	data = quote(info + message + session)
 
-	len_diff = CHUNKSIZE - len(data)
-	return bytes(hex(len_diff), 'utf-8') * len_diff
+	# encrypt the data
+	ret = b64encode(cipher.iv + cipher.encrypt(pad(data.encode('utf-8'), CHUNKSIZE)))
 
-def _decrypt(message):
-	pass
+	return ret
+
+def _decrypt(cipher_text, key):
+	raw = b64decode(cipher_text)
+	cipher = AES.new(key, AES.MODE_CBC, raw[:CHUNKSIZE])
+
+	# decrypt the data
+	return unpad(cipher.decrypt(raw[CHUNKSIZE:]), CHUNKSIZE)
+
