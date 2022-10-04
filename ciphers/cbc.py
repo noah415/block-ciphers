@@ -1,9 +1,7 @@
 import os
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
-from cryptography.hazmat.primitives import padding
 from ciphers.constants import *
-from urllib.parse import quote, unquote
-import sys
+from urllib.parse import quote
 from Crypto.Util.Padding import pad, unpad
 from base64 import b64encode, b64decode
 from Crypto.Cipher import AES

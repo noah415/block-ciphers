@@ -1,6 +1,3 @@
-import urllib.parse
-import os, sys
-from Crypto.Util.Padding import pad, unpad
 from ciphers.cbc import _decrypt, _encrypt
 from ciphers.constants import CHUNKSIZE
 from base64 import b64encode, b64decode

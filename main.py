@@ -4,7 +4,6 @@ from ciphers.cbc import cbc
 from ciphers.constants import CHUNKSIZE
 from ciphers.ecb import ecb
 from Crypto.Cipher import AES
-from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 
 task_one_prompt = '1) encrypt a file'
 task_two_prompt = '2) mimic a website'
