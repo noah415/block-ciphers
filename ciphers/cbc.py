@@ -41,3 +41,19 @@ def _encrypt_file(infile: str, outfile: str, key):
 		
 		f2.write(header)
 		f2.write(enc_out)
+
+def _encrypt(message):
+	cipher = Cipher(algorithms.AES(key), modes.CBC(iv))
+	encryptor = cipher.encryptor()
+
+	data = f.read(CHUNKSIZE)
+	if not data:
+		break
+
+	len_diff = CHUNKSIZE - len(data)
+	data += b'\0' * len_diff
+
+	iv = encryptor.update(data)
+
+def _decrypt(message):
+	pass
