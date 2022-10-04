@@ -3,24 +3,54 @@ import cryptography
 from ciphers.cbc import cbc
 from ciphers.ecb import ecb
 
+task_one_prompt = '1) encrypt a file'
+task_two_prompt = '2) mimic a website'
+exit_prompt = '4) exit'
+
 def main():
-	if len(sys.argv[1:]) != 3:
-		print("Usage: py main.py <ecb | cbc> <infile> <outfile>")
+
+	while True:
+		user_choice = input(f'\nSelect an option:\n\n{task_one_prompt}\n{task_two_prompt}\n{exit_prompt}\n> ')
+
+		if not user_choice.isnumeric() or int(user_choice) <= 0 or int(user_choice) > 4:
+			print('\nPlease enter a valid number for your choice.')
+
+		else:
+
+			if int(user_choice) == 1:
+				task_one()
+				continue
+
+			if int(user_choice) == 2:
+				pass
+
+			if int(user_choice) == 3:
+				pass
+
+			if int(user_choice) == 4:
+				break
+
+	return
+
+def task_one():
+	args = input("\nUsage: <ecb | cbc> <infile> <outfile>\n\nEnter your parameters > ").split()
+	if len(args) != 3:
+		print("Usage: <ecb | cbc> <infile> <outfile>")
 		return
 	
-	if sys.argv[1].lower() not in ['ecb', 'cbc']:
-		print(f'You chose to incrypt using "{sys.argv[1]}" but the only valid modes are ecb or cbc.')
+	if args[0].lower() not in ['ecb', 'cbc']:
+		print(f'You chose to incrypt using "{args[0]}" but the only valid modes are ecb or cbc.')
 		return
 
-	mode = sys.argv[1].lower()
-	infile = sys.argv[2]
-	outfile = sys.argv[3]
+	mode = args[0].lower()
+	infile = args[1]
+	outfile = args[2]
 
 	if mode == 'ecb':
 		ecb(infile, outfile)
 	if mode == 'cbc':
 		cbc(infile, outfile)
-
+	return None
 
 if __name__ == '__main__':
 	main()

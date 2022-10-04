@@ -5,6 +5,7 @@ from ciphers.constants import *
 def ecb(infile: str, outfile: str):
 
 	print(f'Encrypting {infile} using ECB ...')
+	
 	key = os.urandom(CHUNKSIZE)
 
 	cipher = Cipher(algorithms.AES(key), modes.ECB())

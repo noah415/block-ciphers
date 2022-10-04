@@ -7,16 +7,18 @@ def cbc(infile: str, outfile: str):
 	print(f'Encrypting {infile} using CBC ...')
 
 	key = os.urandom(CHUNKSIZE)
+	iv = os.urandom(CHUNKSIZE)
 
-	_encrypt_file(infile, outfile, key)
+	cipher = Cipher(algorithms.AES(key), modes.CBC(iv))
+	encryptor = cipher.encryptor()
+
+	_encrypt_file(infile, outfile, encryptor)
 
 	print(f'\nEcryption done - outputs/{outfile}')
 
 	return
 
-def _encrypt_file(infile: str, outfile: str, key):
-
-	iv = os.urandom(CHUNKSIZE)
+def _encrypt_file(infile: str, outfile: str, encryptor: Cipher):
 
 	f = open(infile, 'rb')
 
@@ -29,15 +31,12 @@ def _encrypt_file(infile: str, outfile: str, key):
 
 	while True:
 
-		cipher = Cipher(algorithms.AES(key), modes.CBC(iv))
-		encryptor = cipher.encryptor()
-
 		data = f.read(CHUNKSIZE)
 		if not data:
 			break
 
 		len_diff = CHUNKSIZE - len(data)
-		data += b'\0' * len_diff
+		data += bytes(hex(len_diff), 'utf-8') * len_diff
 
 		iv = encryptor.update(data)
 		enc_out += iv
