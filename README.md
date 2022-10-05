@@ -39,5 +39,5 @@ Select an option:
 4) exit
 > 2
 
-Give input message > 1111119admin9true9<enter>
+Give input message > 1111119admin9true9
 ```
