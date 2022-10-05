@@ -2,9 +2,15 @@
 
 ## Before starting...
 
+### Dependencies
+
+Use `pip install <module>` on the following modules:
+- cryptography
+- pycryptodome
+
 ### Create the outputs/ folder
 
-In order to encrypt the bpm image files (and any other types of files), you must first create an outputs/ folder in the repo for all of the encrypted files to be placed when the program is finished with them.
+By default, the program uses the `outputs/` directory from its filepath to store outputs from file encryptions. It will be created automatically, but if you already have an `outputs` in your directory and it is NOT a directory, it will cause the program to fail encryption files.
 
 ### Setting up dev environment
 
