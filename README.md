@@ -10,7 +10,7 @@ Use `pip install <module>` on the following modules:
 
 ### The outputs/ folder
 
-By default, the program uses the `outputs/` directory from its filepath to store outputs from file encryptions. **It will be created automatically**, but if you already have an `outputs` in your directory and it is **NOT** a directory, it will cause the program to fail encryption files.
+By default, the program uses the `outputs/` directory from its filepath to store outputs from file encryptions. ***It will be created automatically***, but if you already have an `outputs` in your directory and it is **NOT** a directory, it will cause the program to fail encryption files.
 
 ### Setting up dev environment
 
