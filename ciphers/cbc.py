@@ -1,6 +1,10 @@
 import os
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from ciphers.constants import *
+from urllib.parse import quote
+from Crypto.Util.Padding import pad, unpad
+from base64 import b64encode, b64decode
+from Crypto.Cipher import AES
 
 def cbc(infile: str, outfile: str):
 
@@ -42,8 +46,27 @@ def _encrypt_file(infile: str, outfile: str, encryptor: Cipher):
 		enc_out += iv
 
 	with open(f'outputs/{outfile}', 'wb') as f2:
-
 		if bmp:
 			f2.write(header)
 
 		f2.write(enc_out)
+
+def _encrypt(message, cipher):
+	info = 'userid=456;userdata='
+	session = ';session-id=31337'
+
+	# url encode the data
+	data = quote(info + message + session)
+
+	# encrypt the data
+	ret = b64encode(cipher.iv + cipher.encrypt(pad(data.encode('utf-8'), CHUNKSIZE)))
+
+	return ret
+
+def _decrypt(cipher_text, key):
+	raw = b64decode(cipher_text)
+	cipher = AES.new(key, AES.MODE_CBC, raw[:CHUNKSIZE])
+
+	# decrypt the data
+	return unpad(cipher.decrypt(raw[CHUNKSIZE:]), CHUNKSIZE)
+
