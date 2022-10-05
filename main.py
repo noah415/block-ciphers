@@ -1,4 +1,5 @@
 import sys
+import os
 import cryptography
 from ciphers.cbc import cbc
 from ciphers.ecb import ecb
@@ -33,6 +34,14 @@ def main():
 	return
 
 def task_one():
+
+	if 'outputs' not in os.listdir():
+		os.mkdir('outputs')
+
+	if not os.path.isdir('outputs'):
+		print("\nError - \'outputs\' must be a directory for file encryption")
+		return
+
 	args = input("\nUsage: <ecb | cbc> <infile> <outfile>\n\nEnter your parameters > ").split()
 	if len(args) != 3:
 		print("Usage: <ecb | cbc> <infile> <outfile>")
