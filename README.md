@@ -4,6 +4,8 @@
 
 ### Dependencies
 
+Use python version 3 (latest version recommended)
+
 Use `pip install <module>` on the following modules:
 - cryptography
 - pycryptodome
