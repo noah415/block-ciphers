@@ -1,7 +1,9 @@
-import sys
-import cryptography
+import os
+from admin.funcs import submit, verify
 from ciphers.cbc import cbc
+from ciphers.constants import CHUNKSIZE
 from ciphers.ecb import ecb
+from Crypto.Cipher import AES
 
 task_one_prompt = '1) encrypt a file'
 task_two_prompt = '2) mimic a website'
@@ -22,7 +24,7 @@ def main():
 				continue
 
 			if int(user_choice) == 2:
-				pass
+				website()
 
 			if int(user_choice) == 3:
 				pass
@@ -31,6 +33,14 @@ def main():
 				break
 
 	return
+
+def website():
+	msg = input('\nGive input message > ')
+	key = os.urandom(CHUNKSIZE)
+	iv = os.urandom(CHUNKSIZE)
+	cipher = AES.new(key, AES.MODE_CBC, iv)
+	msg = submit(msg, cipher)
+	verify(msg, key)
 
 def task_one():
 	args = input("\nUsage: <ecb | cbc> <infile> <outfile>\n\nEnter your parameters > ").split()
