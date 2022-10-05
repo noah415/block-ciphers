@@ -12,13 +12,6 @@ Use `pip install <module>` on the following modules:
 
 By default, the program uses the `outputs/` directory from its filepath to store outputs from file encryptions. ***It will be created automatically***, but if you already have an `outputs` in your directory and it is **NOT** a directory, it will cause the program to fail outputting encrypted files.
 
-### Setting up dev environment
-
-Use pip to install these dependencies.
-
-- cryptography
-- pycryptodome
-
 ### Start the application
 
 To start the application, all you need to do is run this command.
